@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tham Dự Lễ Tốt Nghiệp</title>
+    <title>Tham Dự Lễ Tốt Nghiệp 2025</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,21 +58,52 @@
 </head>
 <body>
     <header>
-        <h1>Chào Mừng Đến Với Lễ Tốt Nghiệp Vui Vẻ!</h1>
-        <p>Ngày: 26/07/2024 | Địa điểm: Đại Học Bách Khoa Hà Nội | Thời gian: 13:00</p>
+        <h1>Chào Mừng Đến Với Lễ Tốt Nghiệp 2025!</h1>
+        <p>Ngày: 30/06/2025 | Địa điểm: Hội Trường Đại Học XYZ | Thời gian: 09:00</p>
     </header>
     <div class="container">
-        <h2>Thông Tin Tiệc</h2>
-        <p>Hãy tham gia cùng chúng tôi trong một buổi tối đầy ắp niềm vui! Chủ đề tiệc: **Lễ Tốt Nghiệp**.</p>
+        <h2>Thông Tin Lễ Tốt Nghiệp</h2>
+        <p>Hãy cùng chúng tôi kỷ niệm cột mốc quan trọng này với niềm vui, sự tự hào và những khoảnh khắc đáng nhớ! Chủ đề: <strong>Hành Trình Vươn Xa</strong>.</p>
         <div class="rsvp-form">
-            <h3>Xác Nhận Tham Gia</h3>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfqzSInAg3k_vzskfnSW5QOT-DHY8fCHLFhRcu0z2BKATMD6w/viewform?usp=dialog" target="_blank">
-                <button>Điền RSVP Ngay</button>
-            </a>
+            <h3>Xác Nhận Tham Dự</h3>
+            <form id="rsvpForm">
+                <input type="text" name="name" placeholder="Họ và Tên" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <button type="submit">Gửi RSVP</button>
+            </form>
+            <p id="message" style="color: green; display: none;">Cảm ơn bạn đã RSVP!</p>
         </div>
     </div>
     <footer>
         <p>Liên hệ: ducmanh122k1@gmail.com | Theo dõi chúng tôi trên <a href="https://www.facebook.com/manh.nd001" style="color: #ffb88c;">Facebook</a></p>
     </footer>
+    <script>
+        document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const name = form.name.value;
+            const email = form.email.value;
+            const formId = '1FAIpQLSfqzSInAg3k_vzskfnSW5QOT-DHY8fCHLFhRcu0z2BKATMD6w';
+            const entryName = 'entry.1830680199'; // Họ và Tên
+            const entryEmail = 'entry.1045781291'; // Email
+            const url = `https://docs.google.com/forms/d/e/${formId}/formResponse`;
+
+            const data = new FormData();
+            data.append(entryName, name);
+            data.append(entryEmail, email);
+
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: data
+                });
+                document.getElementById('message').style.display = 'block';
+                form.reset();
+            } catch (error) {
+                alert('Lỗi khi gửi RSVP: ' + error.message);
+            }
+        });
+    </script>
 </body>
 </html>
