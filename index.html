@@ -72,6 +72,7 @@
                 <button type="submit">Gửi RSVP</button>
             </form>
             <p id="message" style="color: green; display: none;">Cảm ơn bạn đã RSVP!</p>
+            <p id="error" style="color: red; display: none;">Lỗi khi gửi RSVP. Vui lòng thử lại!</p>
         </div>
     </div>
     <footer>
@@ -84,24 +85,33 @@
             const name = form.name.value;
             const email = form.email.value;
             const formId = '1FAIpQLSfqzSInAg3k_vzskfnSW5QOT-DHY8fCHLFhRcu0z2BKATMD6w';
-            const entryName = 'Họ và tên'; // Họ và Tên
-            const entryEmail = 'Email'; // Email
+            const entryName = 'entry.1830680199'; // Họ và Tên
+            const entryEmail = 'entry.1045781291'; // Email
             const url = `https://docs.google.com/forms/d/e/${formId}/formResponse`;
 
-            const data = new FormData();
+            const data = new URLSearchParams();
             data.append(entryName, name);
             data.append(entryEmail, email);
 
             try {
-                await fetch(url, {
+                const response = await fetch(url, {
                     method: 'POST',
-                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
                     body: data
                 });
-                document.getElementById('message').style.display = 'block';
-                form.reset();
+                if (response.ok || response.status === 0) { // Status 0 for no-cors success
+                    document.getElementById('message').style.display = 'block';
+                    document.getElementById('error').style.display = 'none';
+                    form.reset();
+                } else {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
             } catch (error) {
-                alert('Lỗi khi gửi RSVP: ' + error.message);
+                console.error('Error:', error);
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('message').style.display = 'none';
             }
         });
     </script>
