@@ -88,8 +88,8 @@
             const name = form.name.value;
             const email = form.email.value;
             const formId = '1FAIpQLSfqzSInAg3k_vzskfnSW5QOT-DHY8fCHLFhRcu0z2BKATMD6w';
-            const entryName = 'entry.1830680199'; // Họ và Tên
-            const entryEmail = 'entry.1045781291'; // Email
+            const entryName = 'entry.1597949689'; // Họ và Tên
+            const entryEmail = 'entry.1488901863'; // Email
             const url = `https://docs.google.com/forms/d/e/${formId}/formResponse`;
 
             const data = new FormData();
@@ -99,10 +99,10 @@
             try {
                 const response = await fetch(url, {
                     method: 'POST',
-                    mode: 'no-cors', // Google Forms không hỗ trợ CORS đầy đủ
+                    mode: 'no-cors',
                     body: data
                 });
-                console.log('RSVP sent:', { name, email });
+                console.log('RSVP sent:', { name, email, formId, entryName, entryEmail });
                 document.getElementById('message').style.display = 'block';
                 document.getElementById('error').style.display = 'none';
                 form.reset();
