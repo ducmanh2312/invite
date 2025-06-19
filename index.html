@@ -54,6 +54,9 @@
             background: #333;
             color: white;
         }
+        #message, #error {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -72,7 +75,7 @@
                 <button type="submit">Gửi RSVP</button>
             </form>
             <p id="message" style="color: green; display: none;">Cảm ơn bạn đã RSVP!</p>
-            <p id="error" style="color: red; display: none;">Lỗi khi gửi RSVP. Vui lòng thử lại!</p>
+            <p id="error" style="color: red; display: none;">Lỗi khi gửi RSVP. Vui lòng kiểm tra và thử lại!</p>
         </div>
     </div>
     <footer>
@@ -89,27 +92,22 @@
             const entryEmail = 'entry.1045781291'; // Email
             const url = `https://docs.google.com/forms/d/e/${formId}/formResponse`;
 
-            const data = new URLSearchParams();
+            const data = new FormData();
             data.append(entryName, name);
             data.append(entryEmail, email);
 
             try {
                 const response = await fetch(url, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
+                    mode: 'no-cors', // Google Forms không hỗ trợ CORS đầy đủ
                     body: data
                 });
-                if (response.ok || response.status === 0) { // Status 0 for no-cors success
-                    document.getElementById('message').style.display = 'block';
-                    document.getElementById('error').style.display = 'none';
-                    form.reset();
-                } else {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+                console.log('RSVP sent:', { name, email });
+                document.getElementById('message').style.display = 'block';
+                document.getElementById('error').style.display = 'none';
+                form.reset();
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error sending RSVP:', error);
                 document.getElementById('error').style.display = 'block';
                 document.getElementById('message').style.display = 'none';
             }
